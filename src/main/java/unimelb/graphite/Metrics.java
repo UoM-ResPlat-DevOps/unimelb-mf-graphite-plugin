@@ -1,12 +1,8 @@
 package unimelb.graphite;
 
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -81,14 +77,13 @@ public class Metrics implements Iterable<Metric> {
         }
         Socket socket = new Socket(InetAddress.getByName(host), port);
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedOutputStream out = new BufferedOutputStream(socket.getOutputStream());
-            writePickle(out);
-            out.flush();
-            String response = null;
-            do {
-                response = in.readLine();
-            } while (response != null);
+            try {
+                writePickle(out);
+                out.flush();
+            } finally {
+                out.close();
+            }
         } finally {
             socket.close();
         }
@@ -128,21 +123,6 @@ public class Metrics implements Iterable<Metric> {
 
     public Iterator<Metric> iterator() {
         return _metrics.iterator();
-    }
-
-    public static void main(String[] args) throws Throwable {
-        // Metric m = new Metric("mediaflux-39.server.threads", new Date(), 20);
-        // m.sendPlainText("115.146.94.123", 2003);
-        Metrics ms = new Metrics();
-        ms.add(new Metric("ABC", 1000, 123));
-        ms.add(new Metric("DEF", 2000, 456));
-        // System.out.println(m.toPlainText());
-        OutputStream o = new BufferedOutputStream(new FileOutputStream(new File("/Users/wliu5/Desktop/jv.bin")));
-        try {
-            ms.writePickle(o);
-        } finally {
-            o.close();
-        }
     }
 
     public int size() {
