@@ -5,13 +5,13 @@ Graphite plugin for Mediaflux. It includes plugin services to send metrics to Gr
 ## 1. Installation
 * In Mediaflux Aterm run following commands:
   * **`package.install :in https://github.com/UoM-ResPlat-DevOps/unimelb-mf-graphite-plugin/releases/download/v0.0.1/mfpkg-unimelb-mf-graphite-plugin-0.0.1.zip`**
-  * **srefresh**
+  * **`srefresh`**
 
 ## 2. Send metrics to Graphite carbon server
 * In Mediaflux Aterm,
-  * **graphite.metrics.send :host your.graphite-carbon-server.org :port 2004 :protocol pickle :server-metrics all**
+  * **`graphite.metrics.send :host your.graphite-carbon-server.org :port 2004 :protocol pickle :server-metrics all`**
 * You can also call other services to retrieve metric value, e.g.
-  * **graphite.metrics.send :host your.graphite-carbon-server.org :port 2004 :protocol pickle :metric < :path system.user.count :service -name authentication.user.count -xpath size < :domain system > >**
+  * **`graphite.metrics.send :host your.graphite-carbon-server.org :port 2004 :protocol pickle :metric < :path system.user.count :service -name authentication.user.count -xpath size < :domain system > >`**
 * The usage of **graphite.metrics.send** see below:
 ```
 > help graphite.metrics.send
