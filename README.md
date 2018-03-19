@@ -50,3 +50,9 @@ help: graphite.metrics.send
 	authority required: ADMINISTER
 	can abort: false
 ```
+## 3. List the metrics (without sending)
+
+You can also list the metrics without sending to Graphite.
+
+* Run the following service in Aterm:
+  * **graphite.metrics.list :server-metrics all**
