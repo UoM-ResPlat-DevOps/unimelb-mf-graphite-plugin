@@ -79,7 +79,7 @@ public class SvcMetricsList extends PluginService {
 
     static void addMetrics(ServiceExecutor executor, Element args, Metrics metrics) throws Throwable {
 
-        String metricPathPrefix = getMetricPathPrefix(executor);
+        String metricPathPrefix = SvcMetricPathPrefixDefaultGet.getDefaultMetricPathPrefix(executor);
         if (args.elementExists("metric")) {
             List<XmlDoc.Element> mes = args.elements("metric");
             for (XmlDoc.Element me : mes) {
@@ -197,9 +197,12 @@ public class SvcMetricsList extends PluginService {
 
     private static void addMetric(ServiceExecutor executor, String metricPathPrefix, Element me, Metrics metrics)
             throws Throwable {
+        while (metricPathPrefix.endsWith(".") || metricPathPrefix.endsWith(" ")) {
+            metricPathPrefix = metricPathPrefix.substring(0, metricPathPrefix.length() - 1);
+        }
         String path = me.value("path");
-        if (!path.startsWith(metricPathPrefix)) {
-            while (path.startsWith(".")) {
+        if (!path.startsWith(metricPathPrefix + ".")) {
+            while (path.startsWith(".") || path.startsWith(" ")) {
                 path = path.substring(1);
             }
             path = metricPathPrefix + "." + path;
@@ -222,13 +225,6 @@ public class SvcMetricsList extends PluginService {
         } else {
             throw new IllegalArgumentException("No metric/value or metric/service.");
         }
-    }
-
-    public static String getMetricPathPrefix(ServiceExecutor executor) throws Throwable {
-        StringBuilder sb = new StringBuilder();
-        sb.append("mediaflux-");
-        sb.append(executor.execute("server.uuid").value("uuid"));
-        return sb.toString();
     }
 
     @Override
