@@ -58,3 +58,9 @@ You can also list the metrics without sending to Graphite.
 
 * Run the following service in Aterm:
   * **`graphite.metrics.list :server-metrics all`**
+
+## 4. Schedule a job to send metrics periodically
+
+Run the follow command in Aterm to send metrics to the specified server every 5 minutes:
+
+* **`schedule.job.create :name Send-Server-Metrics-To-Graphite :service -name graphite.metrics.send < :host your-graphite-server.org > :when < :every -unit minute 5 >`**
