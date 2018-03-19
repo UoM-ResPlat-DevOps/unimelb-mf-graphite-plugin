@@ -57,4 +57,4 @@ help: graphite.metrics.send
 You can also list the metrics without sending to Graphite.
 
 * Run the following service in Aterm:
-  * **graphite.metrics.list :server-metrics all**
+  * **`graphite.metrics.list :server-metrics all`**
