@@ -9,7 +9,7 @@
 
 	<name>unimelb-mf-graphite-plugin</name>
 	<description>Graphite plugin for Mediaflux. It consists of plugin services to send metrics to Graphite carbon server.</description>
-	<url>https://github.com/uom-daris/unimelb-mf-graphite-plugin</url>
+	<url>https://github.com/UoM-ResPlat-DevOps/unimelb-mf-graphite-plugin</url>
 	<organization>
 		<name>The University of Melbourne</name>
 		<url>http://research.unimelb.edu.au/infrastructure/research-platform-services</url>
