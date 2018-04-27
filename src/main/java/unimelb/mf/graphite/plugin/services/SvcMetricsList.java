@@ -23,8 +23,8 @@ public class SvcMetricsList extends PluginService {
 
     public static final String SERVICE_NAME = "graphite.metrics.list";
 
-    public static final String[] SERVER_METRICS = new String[] { "thread", "licence", "connection", "memory", "os",
-            "store", "stream", "task", "all" };
+    public static final String[] SERVER_METRICS = new String[] { "uptime", "thread", "licence", "connection", "memory",
+            "os", "store", "stream", "task", "all" };
 
     private Interface _defn;
 
@@ -104,6 +104,24 @@ public class SvcMetricsList extends PluginService {
             Metrics metrics) throws Throwable {
         XmlDoc.Element status = executor.execute("server.status");
         Date time = new Date();
+        if (sms.contains("all") || sms.contains("uptime")) {
+            double uptime = status.doubleValue("uptime", 0.0);
+            String units = status.stringValue("uptime/@units");
+            if ("seconds".equalsIgnoreCase(units)) {
+
+            } else if ("minutes".equalsIgnoreCase(units)) {
+                uptime *= 60.0;
+            } else if ("hours".equalsIgnoreCase(units)) {
+                uptime *= 3600.0;
+            } else if ("days".equalsIgnoreCase(units)) {
+                uptime *= 86400.0;
+            } else if ("weeks".equalsIgnoreCase(units)) {
+                uptime *= 604800.0;
+            } else {
+                throw new Exception("Unexpected uptime/@units: " + units);
+            }
+            metrics.addMetric(metricPathPrefix + ".uptime.seconds", time, uptime);
+        }
         if (sms.contains("all") || sms.contains("thread")) {
             metrics.addMetric(metricPathPrefix + ".threads.total", time, status.value("threads/total"));
         }
@@ -174,9 +192,9 @@ public class SvcMetricsList extends PluginService {
                 for (XmlDoc.Element se : ses) {
                     String storeType = se.value("type");
                     String storeId = se.value("@id");
-                    long free = se.longValue("mount/free");
+                    long free = se.longValue("mount/free", 0);
                     double freeGB = (double) ((double) free) / 1000000000.0;
-                    long size = se.longValue("mount/size");
+                    long size = se.longValue("mount/size", 0);
                     double sizeGB = (double) ((double) size) / 1000000000.0;
 
                     String prefix = metricPathPrefix + "." + storeType + ".store." + storeId;
