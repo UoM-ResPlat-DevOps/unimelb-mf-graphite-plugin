@@ -51,7 +51,8 @@ public class SvcMetricPathPrefixDefaultGet extends PluginService {
         if (propertyExists) {
             return executor.execute("application.property.get", dm.root()).value("property");
         } else {
-            return "mediaflux-" + executor.execute("server.uuid").value("uuid");
+            String serverUUID = executor.execute("server.uuid").value("uuid");
+            return "resplat.mediaflux." + serverUUID + ".server";
         }
     }
 
