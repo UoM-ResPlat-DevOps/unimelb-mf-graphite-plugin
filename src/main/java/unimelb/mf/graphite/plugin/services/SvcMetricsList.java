@@ -192,12 +192,13 @@ public class SvcMetricsList extends PluginService {
                 for (XmlDoc.Element se : ses) {
                     String storeType = se.value("type");
                     String storeId = se.value("@id");
+                    String storeName = se.value("@name");
                     long free = se.longValue("mount/free", 0);
                     double freeGB = (double) ((double) free) / 1000000000.0;
                     long size = se.longValue("mount/size", 0);
                     double sizeGB = (double) ((double) size) / 1000000000.0;
 
-                    String prefix = metricPathPrefix + "." + storeType + ".store." + storeId;
+                    String prefix = metricPathPrefix + ".store." + storeType + "." + storeId + "_" + storeName;
                     metrics.addMetric(prefix + ".free.gb", time3, String.format("%.3f", freeGB));
                     String freePC = se.value("mount/free/@partition-percent");
                     if (freePC != null) {
