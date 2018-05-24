@@ -4,7 +4,7 @@ Graphite plugin for Mediaflux. It includes plugin services to send metrics to Gr
 
 ## 1. Installation
 * In Mediaflux Aterm run following commands:
-  * **`package.install :in https://github.com/UoM-ResPlat-DevOps/unimelb-mf-graphite-plugin/releases/download/v0.0.1/mfpkg-unimelb-mf-graphite-plugin-0.0.1.zip`**
+  * **`package.install :in https://github.com/UoM-ResPlat-DevOps/unimelb-mf-graphite-plugin/releases/download/v0.0.4/mfpkg-unimelb-mf-graphite-plugin-0.0.4.zip`**
   * **`srefresh`**
 
 ## 2. Send metrics to Graphite carbon server
