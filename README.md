@@ -64,3 +64,10 @@ You can also list the metrics without sending to Graphite.
 Run the follow command in Aterm to send metrics to the specified server every 5 minutes:
 
 * **`schedule.job.create :name Send-Server-Metrics-To-Graphite :service -name graphite.metrics.send < :host your-graphite-server.org > :when < :every -unit minute 5 >`**
+
+## References
+  1. http://graphite.readthedocs.io/en/latest/feeding-carbon.html
+  2. https://github.com/graphite-project/carbon/blob/master/examples/example-pickle-client.py
+  3. https://github.com/pydawan/pickle/blob/master/src/main/java/org/java/serializer/pickle/Pickle.java
+  4. http://www.diveintopython3.net/serializing.html
+  
